@@ -1,0 +1,2 @@
+* Notes for Introduction to Algorithms Book
+- Mostly going to use clojure.
