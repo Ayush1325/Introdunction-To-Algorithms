@@ -27,12 +27,12 @@
 #+END_EXPORT
 - Code
 #+BEGIN_SRC clojure :results output
-  (defn merge-vec [[l & lrest] :as left [r & rrest] :as right]
+  (defn merge-vec [[l & lrest :as left] [r & rrest :as right]]
     (if (and (not-empty left) (not-empty right))
       (if (> l r)
         (concat [r] (merge-vec left rrest))
         (concat [l] (merge-vec lrest right)))
-      (concat left right)))
+      (into [] (concat left right))))
 
   (defn merge-sort [arr]
     (if (<= (count arr) 1)
@@ -46,8 +46,21 @@
 #+RESULTS:
 : true
 : true
-: class clojure.lang.Compiler$CompilerExceptionclass clojure.lang.Compiler$CompilerExceptionSyntax error macroexpanding clojure.core/defn at (*cider-repl Documents/Introduction-to-Algorithms:localhost:41993(clj)*:1:1).
-: Call to clojure.core/defn did not conform to spec.
+
+* Combine-sort
+#+BEGIN_SRC clojure :results output
+  (defn modified-divide [arr]
+    (if (<= (count arr) 10)
+      (ins-sort arr)
+      (let [[left right] (split-at (quot (count arr) 2) arr)]
+        (merge-vec (modified-divide left) (modified-divide right)))))
+
+  (test-runner modified-divide)
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
 
 * Tests
 #+BEGIN_SRC clojure
