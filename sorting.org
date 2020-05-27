@@ -48,6 +48,12 @@
 : true
 
 * Combine-sort
+- A combination of insertion sort and merge sort
+- Worst time: 
+#+BEGIN_EXPORT latex
+\Theta(nk + n\log(n/k))
+#+END_EXPORT
+- Code:
 #+BEGIN_SRC clojure :results output
   (defn modified-divide [arr]
     (if (<= (count arr) 10)
@@ -56,6 +62,33 @@
         (merge-vec (modified-divide left) (modified-divide right)))))
 
   (test-runner modified-divide)
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
+
+* Bubble Sort
+- Another sorting algorithm
+- Worst time: 
+#+BEGIN_EXPORT latex
+\Theta(n^2)
+#+END_EXPORT
+- Code:
+#+BEGIN_SRC clojure :results output
+  (defn bubble [arr]
+    (if (< (count arr) 2)
+      arr
+      (let [a (concat (sort (take 2 arr)) (drop 2 arr))]
+        (concat [(first a)] (bubble (rest a))))))
+
+  (defn bubble-sort [arr]
+    (if (< (count arr) 2)
+      arr
+      (let [a (bubble arr)]
+        (conj (into [] (bubble-sort (drop-last a))) (last a)))))
+
+  (test-runner bubble-sort)
 #+END_SRC
 
 #+RESULTS:
