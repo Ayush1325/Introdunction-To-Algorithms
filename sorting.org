@@ -76,17 +76,20 @@
 #+END_EXPORT
 - Code:
 #+BEGIN_SRC clojure :results output
-  (defn bubble [arr]
-    (if (< (count arr) 2)
-      arr
-      (let [a (concat (sort (take 2 arr)) (drop 2 arr))]
-        (concat [(first a)] (bubble (rest a))))))
+  (defn bubble
+    ([xs] (bubble xs [] false))
+    ([[x y & xs] ys changed]
+     (if (nil? y)
+       [(conj ys x) changed]
+       (if (> x y)
+         (recur (cons x xs) (conj ys y) true)
+         (recur (cons y xs) (conj ys x) changed)))))
 
-  (defn bubble-sort [arr]
-    (if (< (count arr) 2)
-      arr
-      (let [a (bubble arr)]
-        (conj (into [] (bubble-sort (drop-last a))) (last a)))))
+  (defn bubble-sort [xs]
+    (loop [[ys changed] (bubble xs)]
+      (if changed
+        (recur (bubble ys))
+        ys)))
 
   (test-runner bubble-sort)
 #+END_SRC
