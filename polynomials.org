@@ -1,0 +1,31 @@
+* Horners's Rule
+- Basically:
+#+BEGIN_EXPORT latex
+f(x) = a_1 + a_2x + a_3x^2 ...
+     = a_1 + x(a_2 + x(a_3 ...))
+#+END_EXPORT
+- Code:
+#+BEGIN_SRC clojure :results output
+  (defn horners-rule [arr x]
+    (if (< (count arr) 1)
+      0
+      (+ (first arr) (* x (horners-rule (rest arr) x)))))
+
+  (test-runner horners-rule)
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
+
+- Test
+#+BEGIN_SRC clojure
+  (def simple-eq [3 2 1])
+
+  (defn test-runner [func]
+    (println (= (func simple-eq 1) 6))
+    (println (= (func simple-eq 2) 11)))
+#+END_SRC
+
+#+RESULTS:
+: #'user/simple-eq#'user/test-runner
