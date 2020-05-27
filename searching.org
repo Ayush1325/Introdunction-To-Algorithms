@@ -16,9 +16,29 @@
 #+RESULTS:
 : true
 
+* Binary Search
+#+BEGIN_SRC clojure :results output
+  (defn binary-search
+    ([arr item]
+     (binary-search (map #(hash-map :val %1 :pos %2) arr (range (count arr))) item false))
+    ([arr item temp]
+     (if (nil? arr)
+       nil
+       (let [[left [mid & right]] (split-at (quot (count arr) 2) arr)]
+         (cond 
+           (= (:val mid) item) (:pos mid)
+           (> (:val mid) item) (binary-search left item temp)
+           (< (:val mid) item) (binary-search right item temp))))))
+
+  (test-runner binary-search)
+#+END_SRC
+
+#+RESULTS:
+: true
+
 * Test
 #+BEGIN_SRC clojure
-  (def simple-list {:seq [2 3 5 1 6 7] :query 5 :ans 2})
+  (def simple-list {:seq [1 2 3 4 5 6 7] :query 5 :ans 4})
 
   (defn test-runner [func]
     (doseq [item [simple-list]]
