@@ -1,0 +1,29 @@
+* Linear Search
+#+BEGIN_SRC clojure :results output
+  (defn linear-search
+    ([arr item]
+     (linear-search arr item 0))
+    ([arr item iter]
+     (if (>= iter (count arr))
+       nil
+       (if (= (get arr iter) item)
+         iter
+         (recur arr item (inc iter))))))
+
+  (test-runner linear-search)
+#+END_SRC
+
+#+RESULTS:
+: true
+
+* Test
+#+BEGIN_SRC clojure
+  (def simple-list {:seq [2 3 5 1 6 7] :query 5 :ans 2})
+
+  (defn test-runner [func]
+    (doseq [item [simple-list]]
+      (println (= (func (:seq item) (:query item)) (:ans item)))))
+#+END_SRC
+
+#+RESULTS:
+: #'user/simple-list#'user/test-runner
