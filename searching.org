@@ -27,8 +27,8 @@
        (let [[left [mid & right]] (split-at (quot (count arr) 2) arr)]
          (cond 
            (= (:val mid) item) (:pos mid)
-           (> (:val mid) item) (binary-search left item temp)
-           (< (:val mid) item) (binary-search right item temp))))))
+           (> (:val mid) item) (recur left item temp)
+           (< (:val mid) item) (recur right item temp))))))
 
   (test-runner binary-search)
 #+END_SRC

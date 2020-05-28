@@ -1,0 +1,37 @@
+* Inversions
+- For i < j : A[i] > A[j] is known as inversion.
+- Solution
+#+BEGIN_SRC clojure :results output
+  (defn merge-vec [[l & lrest :as left] [r & rrest :as right]]
+    (if (and (not-empty left) (not-empty right))
+      (if (> l r)
+        (let [[x inv] (merge-vec left rrest)]
+          [(concat [r] x) (+ inv (count left))])
+        (let [[x inv] (merge-vec lrest right)]
+          [(concat [l] x) inv]))
+      [(into [] (concat left right)) 0]))
+
+  (defn merge-sort [arr inv]
+    (if (<= (count arr) 1)
+      [arr inv]
+      (let [[left right] (split-at (quot (count arr) 2) arr) [l inl] (merge-sort left inv) [r inr] (merge-sort right inv)]
+        (let [[x c] (merge-vec l r)]
+          [x (+ c inl inr)]))))
+
+  (test-runner merge-sort)
+#+END_SRC
+
+#+RESULTS:
+: true
+
+- Test
+#+BEGIN_SRC clojure
+  (def simple-test {:list [2 3 8 6 1] :ans 5})
+
+  (defn test-runner [func]
+    (doseq [x [simple-test]]
+      (println (= (second (func (:list x) 0)) (:ans x)))))
+#+END_SRC
+
+#+RESULTS:
+: #'user/simple-test#'user/test-runner
