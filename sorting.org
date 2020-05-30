@@ -30,9 +30,9 @@
   (defn merge-vec [[l & lrest :as left] [r & rrest :as right]]
     (if (and (not-empty left) (not-empty right))
       (if (> l r)
-        (concat [r] (merge-vec left rrest))
-        (concat [l] (merge-vec lrest right)))
-      (into [] (concat left right))))
+        (conj (merge-vec left rrest) r)
+        (conj (merge-vec lrest right) l))
+      (concat left right)))
 
   (defn merge-sort [arr]
     (if (<= (count arr) 1)

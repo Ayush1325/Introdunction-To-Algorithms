@@ -1,0 +1,56 @@
+#+STARTUP: latexpreview
+#+OPTIONS: tex:t
+* $\Theta$-Notation
+- It is asymptotically tight bound.
+#+BEGIN_EXPORT latex
+\Theta(g(n)) = {f(n): there exists positive constants c_1 and c_2 and n_1 such that
+0 \le c_1g(n) \le f(n) \le c_2g(n) for all n \ge n_1 }
+#+END_EXPORT
+
+* $\Omicron$-Notation
+- Asymptotic upper bound.
+#+BEGIN_EXPORT latex
+\Omicron(g(n)) = {f(n): there exists positive constants c and n_1 such that
+0 \le f(n) \le cg(n) for all n \ge n_1 } 
+#+END_EXPORT
+
+* $\Omega$-Notation
+- Asymptotic Lower Bound.
+#+BEGIN_EXPORT latex
+\Omicron(g(n)) = {f(n): there exists positive constants c and n_1 such that
+0 \le cg(n) \le f(n) for all n \ge n_1 } 
+#+END_EXPORT
+
+* $\omicron$-Notation
+- Asymptotic Tight Upper Bound
+#+BEGIN_EXPORT latex
+\Omicron(g(n)) = {f(n): there exists positive constants c and n_1 such that  
+0 \le f(n) < cg(n) for all n \ge n_1 } 
+#+END_EXPORT
+
+* $\omega$-Notation
+- Asymptotic Tight Lower Bound.
+#+BEGIN_EXPORT latex
+\Omicron(g(n)) = {f(n): there exists positive constants c and n_1 such that  
+0 \le cg(n) < f(n) for all n \ge n_1 } 
+#+END_EXPORT
+
+* Floors And Ceillings
+- Floor$\lfloor x \rfloor$ : Greatest Integer function
+- Ceiling$\lceil x \rceil$ : Least Integer Function
+#+BEGIN_EXPORT latex
+\lceil \frac{a}{b} \rceil \le \frac{a + (b - 1)}{b}
+\lfloor \frac{a}{b} \rfloor \ge \frac{a - (b - 1)}{b}
+#+END_EXPORT
+
+* Modular Arithmatic
+- a mod n is the remainder
+#+BEGIN_EXPORT latex
+a mod n = a - \lfloor a/n \rfloor
+#+END_EXPORT
+
+* Factorials
+- Stirling's Approximation
+#+BEGIN_EXPORT latex
+n! = \sqrt{2 \pi n} \left(\frac{n}{e} \right)^n \left(1 + \Theta \left(\frac{1}{n} \right)\right)
+#+END_EXPORT
