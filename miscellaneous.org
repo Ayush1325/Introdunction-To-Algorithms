@@ -37,6 +37,36 @@
 : #'user/simple-test#'user/test-runner
 
 * Max Subarray
+- Recursive
+#+BEGIN_SRC clojure :results output
+  (defn max-crossing-subarray
+    ([left right] (let [l (max-crossing-subarray (reverse left)) r (max-crossing-subarray right)]
+                    {:m-start (:m-pos l) :m-end (:m-pos r) :m-sum (+ (:m-sum l) (:m-sum r))}))
+    ([arr]
+     (reduce (fn [{m-sum :m-sum m-pos :m-pos c-sum :c-sum} {val :val pos :pos}]
+               (let [n-sum (+ c-sum val)]
+                 (if (>= n-sum m-sum)
+                   {:m-pos pos :m-sum n-sum :c-sum n-sum}
+                   {:m-pos m-pos :m-sum m-sum :c-sum n-sum})))
+             {:m-pos (:pos (first arr)) :m-sum 0 :c-sum 0}
+             arr)))
+
+  (defn max-subarray
+    ([arr] (max-subarray (map #(hash-map :val %1 :pos %2) arr (range (count arr))) nil))
+    ([arr tip]
+     (if (< (count arr) 2)
+       (let [{pos :pos val :val} (first arr)]
+         {:m-start pos :m-end pos :m-sum val})
+       (let [[left right] (split-at (quot (count arr) 2) arr)
+             l (max-subarray left tip) r (max-subarray right tip) c (max-crossing-subarray left right)]
+         (last (sort-by :m-sum [l r c]))))))
+
+  (test-runner max-subarray)
+#+END_SRC
+
+#+RESULTS:
+: true
+
 - Linear
 #+BEGIN_SRC clojure :results output
   (defn max-subarray
