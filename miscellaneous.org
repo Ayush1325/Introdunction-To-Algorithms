@@ -35,3 +35,39 @@
 
 #+RESULTS:
 : #'user/simple-test#'user/test-runner
+
+* Max Subarray
+- Linear
+#+BEGIN_SRC clojure :results output
+  (defn max-subarray
+    ([arr] (max-subarray (map #(hash-map :val %1 :pos %2) arr (range (count arr))) nil))
+    ([xs tip]
+     (reduce
+      (fn [{c-sum :c-sum m-sum :m-sum c-start :c-start m-start :m-start m-end :m-end} {x :val pos :pos}]
+        (let [n-sum (+ c-sum x)]
+          (if (> n-sum m-sum)
+            {:m-sum n-sum :c-sum n-sum :m-start c-start :m-end pos :c-start c-start}
+            (if (< n-sum 0)
+              {:m-sum m-sum :c-sum 0 :m-start m-start :m-end m-end :c-start (inc pos)}
+              {:m-sum m-sum :c-sum n-sum :m-start m-start :m-end m-end :c-start c-start}))))
+      {:m-sum 0 :c-sum 0 :m-start 0 :m-end 0 :c-start 0}
+      xs)))
+
+  (test-runner max-subarray)
+#+END_SRC
+
+#+RESULTS:
+: true
+
+- Test
+#+BEGIN_SRC clojure
+  (def simple-test {:list [13 -3 -25 20 -3 -16 -23 18 20 -7 12 -5 -22 15 -4 7] :ans [7 10]})
+
+  (defn test-runner [func]
+    (doseq [t [simple-test]]
+      (let [res (func (:list t))]
+        (println (= [(:m-start res) (:m-end res)] (:ans t))))))
+#+END_SRC
+
+#+RESULTS:
+: #'user/simple-test#'user/test-runner
