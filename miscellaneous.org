@@ -1,6 +1,6 @@
 * Inversions
 - For i < j : A[i] > A[j] is known as inversion.
-- Solution
+** Solution
 #+BEGIN_SRC clojure :results output
   (defn merge-vec [[l & lrest :as left] [r & rrest :as right]]
     (if (and (not-empty left) (not-empty right))
@@ -24,7 +24,7 @@
 #+RESULTS:
 : true
 
-- Test
+** Test
 #+BEGIN_SRC clojure
   (def simple-test {:list [2 3 8 6 1] :ans 5})
 
@@ -37,7 +37,7 @@
 : #'user/simple-test#'user/test-runner
 
 * Max Subarray
-- Recursive
+** Recursive
 #+BEGIN_SRC clojure :results output
   (defn max-crossing-subarray
     ([left right] (let [l (max-crossing-subarray (reverse left)) r (max-crossing-subarray right)]
@@ -67,7 +67,7 @@
 #+RESULTS:
 : true
 
-- Linear
+** Linear
 #+BEGIN_SRC clojure :results output
   (defn max-subarray
     ([arr] (max-subarray (map #(hash-map :val %1 :pos %2) arr (range (count arr))) nil))
@@ -89,7 +89,7 @@
 #+RESULTS:
 : true
 
-- Test
+** Test
 #+BEGIN_SRC clojure
   (def simple-test {:list [13 -3 -25 20 -3 -16 -23 18 20 -7 12 -5 -22 15 -4 7] :ans [7 10]})
 

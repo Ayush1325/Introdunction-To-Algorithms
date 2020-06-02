@@ -4,7 +4,7 @@
 f(x) = a_1 + a_2x + a_3x^2 ...
      = a_1 + x(a_2 + x(a_3 ...))
 #+END_EXPORT
-- Code:
+** Code:
 #+BEGIN_SRC clojure :results output
   (defn horners-rule [arr x]
     (if (< (count arr) 1)
@@ -18,7 +18,7 @@ f(x) = a_1 + a_2x + a_3x^2 ...
 : true
 : true
 
-- Test
+** Test
 #+BEGIN_SRC clojure
   (def simple-eq [3 2 1])
 

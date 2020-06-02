@@ -1,5 +1,5 @@
 * Matrix Multiplication
-- Basic version
+** Basic version
 #+BEGIN_SRC clojure :results output
   (defn transpose [mat]
     (if (not (empty? (first mat)))
@@ -19,7 +19,7 @@
 #+RESULTS:
 : true
 
-- Test
+** Test
 #+BEGIN_SRC clojure
   (def simple-test {:first [[1 2]
                             [3 4]]
