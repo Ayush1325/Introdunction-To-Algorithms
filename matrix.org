@@ -1,0 +1,37 @@
+* Matrix Multiplication
+- Basic version
+#+BEGIN_SRC clojure :results output
+  (defn transpose [mat]
+    (if (not (empty? (first mat)))
+      (do
+        (concat (conj [] (map #(first %) mat)) (transpose (map #(rest %) mat))))))
+
+  (defn basic-mul
+    ([mat1 mat2] (basic-mul mat1 (transpose mat2) nil))
+    ([mat1 mat2 tip]
+     (map (fn [row]
+            (map (fn [col]
+                   (reduce + (map #(* %1 %2) row col))) mat2)) mat1)))
+
+  (test-runner basic-mul)
+#+END_SRC
+
+#+RESULTS:
+: true
+
+- Test
+#+BEGIN_SRC clojure
+  (def simple-test {:first [[1 2]
+                            [3 4]]
+                    :second [[5 6]
+                             [7 8]]
+                    :ans [[19 22]
+                          [43 50]]})
+
+  (defn test-runner [func]
+    (doseq [t [simple-test]]
+      (println (= (:ans t) (func (:first t) (:second t))))))
+#+END_SRC
+
+#+RESULTS:
+: #'user/simple-test#'user/test-runner
