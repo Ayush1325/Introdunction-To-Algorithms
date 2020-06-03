@@ -1,5 +1,52 @@
 * Matrix Multiplication
+** Strassens Method
+- Time Complexity
+#+BEGIN_EXPORT latex
+\Theta(n^{\ln{7}})
+#+END_EXPORT
+- Code
+#+BEGIN_SRC clojure :results output
+  (defn divide-mat [mat]
+    (let [mid (quot (count mat) 2) [top bottom] (split-at mid (map #(split-at mid %) mat))]
+      [(map first top) (map second top)
+       (map first bottom) (map second bottom)]))
+
+  (defn matrix-opr
+    ([func mat1 mat2 mat3]
+     (map #(map func %1 %2 %3) mat1 mat2 mat3))
+    ([func mat1 mat2]
+     (map #(map func %1 %2) mat1 mat2)))
+
+  (defn strassen-mul [mat1 mat2]
+    (if (= (count mat1) 1)
+      [(* (first (first mat1)) (first (first mat2)))]
+      (let [[a-00 a-01 a-10 a-11] (divide-mat mat1)
+            [b-00 b-01 b-10 b-11] (divide-mat mat2)]
+        (let [p-1 (strassen-mul a-00 (matrix-opr - b-01 b-11))
+              p-2 (strassen-mul b-11 (matrix-opr + a-00 a-01))
+              p-3 (strassen-mul b-00 (matrix-opr + a-10 a-11))
+              p-4 (strassen-mul a-11 (matrix-opr - b-10 b-00))
+              p-5 (strassen-mul (matrix-opr + a-00 a-11) (matrix-opr + b-00 b-11))
+              p-6 (strassen-mul (matrix-opr - a-01 a-11) (matrix-opr + b-10 b-11))
+              p-7 (strassen-mul (matrix-opr - a-00 a-10) (matrix-opr + b-00 b-01))]
+          (let [c-00 (map - (map + p-5 p-4 p-6) p-2)
+                c-01 (map + p-1 p-2)
+                c-10 (map + p-3 p-4)
+                c-11 (map - (map + p-5 p-1) (map + p-3 p-7))]
+            [(concat c-00 c-01)
+             (concat c-10 c-11)])))))
+
+  (test-runner strassen-mul)
+#+END_SRC
+
+#+RESULTS:
+: true
+
 ** Basic version
+- Time Complexity
+#+BEGIN_EXPORT latex
+\Theta(n^3)
+#+END_EXPORT
 #+BEGIN_SRC clojure :results output
   (defn transpose [mat]
     (if (not (empty? (first mat)))
