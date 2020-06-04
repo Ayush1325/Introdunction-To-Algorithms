@@ -1,3 +1,14 @@
+* Comparison Of Different Sorting Algorithms
+| Algorithm      | Worst-case  | Average-case |
+|----------------+-------------+--------------|
+| Insertion Sort | \Theta(n^2)       | \Theta(n^2)        |
+| Merge Sort     | \Theta(n\ln{n})  | \Theta(n\ln{n})   |
+| Heapsort       | \Omicron(n\ln{n})  |              |
+| Quick Sort     | \Theta(n^2)       | \Theta(n\ln{n})   |
+| Counting Sort  | \Theta(k + n)    | \Theta(k + n)     |
+| Radix Sort     | \Theta(d(k + n)) | \Theta(d(k + n))  |
+| Bucket Sort    | \Theta(n^2)       | \Theta(n)         |
+
 * Insertion Sort
 - This is the basic version of insertion sort.
 - Worst time: 

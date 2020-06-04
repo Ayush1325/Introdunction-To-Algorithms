@@ -54,3 +54,15 @@ a mod n = a - \lfloor a/n \rfloor
 #+BEGIN_EXPORT latex
 n! = \sqrt{2 \pi n} \left(\frac{n}{e} \right)^n \left(1 + \Theta \left(\frac{1}{n} \right)\right)
 #+END_EXPORT
+
+* Master Method
+- If recurrence is of the form
+#+BEGIN_EXPORT latex
+T(n) = aT(n/b) + f(n)
+#+END_EXPORT
+- There can be the following asymptotic bonds:
+#+BEGIN_EXPORT latex
+1. If f(n) = \Omicron(n^{\log_b{a} - \E}), then T(n) = \Theta(n^{\log_b{a}})
+2. If f(n) = \Theta(n^{\log_b{a}}), then T(n) = \Theta(n^{\log_b{a}}\ln{n})
+1. If f(n) = \Omega(n^{\log_b{a} + \E}), then T(n) = \Theta(f(n))
+#+END_EXPORT
