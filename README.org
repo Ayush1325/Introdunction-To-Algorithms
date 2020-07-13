@@ -1,2 +1,5 @@
 * Notes for Introduction to Algorithms Book
-- Mostly going to use clojure.
+- Going to use Rust and Clojure
+- Avoid Using TCO in RUST as it doesn not support it. Using loops is more performant for now.
+- Try to write pure functions as much as possible.
+- Test the algoriths in HackerEarth or something instead of hand writing the tests.
