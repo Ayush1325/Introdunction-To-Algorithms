@@ -5,6 +5,17 @@ f(x) = a_1 + a_2x + a_3x^2 ...
      = a_1 + x(a_2 + x(a_3 ...))
 #+END_EXPORT
 ** Code:
+*** Rust
+#+BEGIN_SRC rustic
+  fn horners_rule(arr: &[i32], x: i32) -> i32 {
+      let mut ans = 0;
+      for i in arr.iter().rev() {
+          ans = x * (ans + *i);
+      }
+      ans
+  }
+#+END_SRC
+*** Clojure
 #+BEGIN_SRC clojure :results output
   (defn horners-rule [arr x]
     (if (< (count arr) 1)
