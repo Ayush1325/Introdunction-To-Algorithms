@@ -29,6 +29,21 @@
 : true
 
 * Binary Search
+** Rust
+#+BEGIN_SRC rustic
+  fn search(arr: &[i32], num: i32) -> i32 {
+      let mid = arr.len() / 2;
+      if arr.len() == 0 {
+          return -1;
+      }
+      match num.cmp(&arr[mid]) {
+          Ordering::Greater => (mid as i32) + search(&arr[mid..arr.len()], num),
+          Ordering::Equal => (mid as i32) + 1,
+          Ordering::Less => search(&arr[0..mid], num),
+      }
+  }
+#+END_SRC
+** Clojure
 #+BEGIN_SRC clojure :results output
   (defn binary-search
     ([arr item]
