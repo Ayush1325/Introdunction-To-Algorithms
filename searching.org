@@ -1,4 +1,16 @@
 * Linear Search
+** Rust
+#+BEGIN_SRC rustic
+  fn search(arr: &[i32], num: i32) -> i32 {
+      for (i, x) in arr.iter().enumerate() {
+          if num == *x {
+              return (i as i32) + 1;
+          }
+      }
+      -1
+  }
+#+END_SRC
+** Clojure
 #+BEGIN_SRC clojure :results output
   (defn linear-search
     ([arr item]
