@@ -8,11 +8,7 @@ f(x) = a_1 + a_2x + a_3x^2 ...
 *** Rust
 #+BEGIN_SRC rustic
   fn horners_rule(arr: &[i32], x: i32) -> i32 {
-      let mut ans = 0;
-      for i in arr.iter().rev() {
-          ans = x * (ans + *i);
-      }
-      ans
+      arr.iter().rev().fold(0, |sum, v| v + x * sum)
   }
 #+END_SRC
 *** Clojure

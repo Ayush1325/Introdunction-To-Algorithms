@@ -32,15 +32,22 @@
 ** Rust
 #+BEGIN_SRC rustic
   fn search(arr: &[i32], num: i32) -> i32 {
-      let mid = arr.len() / 2;
-      if arr.len() == 0 {
-          return -1;
+      let mut low = 0;
+      let mut high = arr.len();
+      let mut mid = 0;
+      while low < high {
+          mid = (low + high) / 2;
+          match num.cmp(&arr[mid]) {
+              Ordering::Greater => {
+                  low = mid + 1;
+              }
+              Ordering::Less => {
+                  high = mid;
+              }
+              Ordering::Equal => return (mid as i32) + 1,
+          }
       }
-      match num.cmp(&arr[mid]) {
-          Ordering::Greater => (mid as i32) + search(&arr[mid..arr.len()], num),
-          Ordering::Equal => (mid as i32) + 1,
-          Ordering::Less => search(&arr[0..mid], num),
-      }
+      -1
   }
 #+END_SRC
 ** Clojure
