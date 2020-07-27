@@ -15,7 +15,11 @@
 #+BEGIN_EXPORT latex 
 \Theta(n^2) 
 #+END_EXPORT
-- Code
+** Code
+*** Rust
+#+begin_src rust
+#+end_src
+*** Clojure
 #+BEGIN_SRC clojure :results output
   (defn ins-sort [arr]
     (reduce (fn [res inp]

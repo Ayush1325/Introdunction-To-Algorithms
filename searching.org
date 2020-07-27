@@ -1,6 +1,6 @@
 * Linear Search
 ** Rust
-#+BEGIN_SRC rustic
+#+BEGIN_SRC rust
   fn search(arr: &[i32], num: i32) -> i32 {
       for (i, x) in arr.iter().enumerate() {
           if num == *x {
@@ -30,7 +30,7 @@
 
 * Binary Search
 ** Rust
-#+BEGIN_SRC rustic
+#+BEGIN_SRC rust
   fn search(arr: &[i32], num: i32) -> i32 {
       let mut low = 0;
       let mut high = arr.len();
