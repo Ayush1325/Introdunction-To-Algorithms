@@ -18,6 +18,18 @@
 ** Code
 *** Rust
 #+begin_src rust
+  fn sort(arr: &mut [i32]) {
+      let len = arr.len();
+      for i in 1..len {
+          let mut j = i;
+          let key = arr[i];
+          while j > 0 && arr[j - 1] > key {
+              arr[j] = arr[j - 1];
+              j -= 1;
+          }
+          arr[j] = key;
+      }
+  }
 #+end_src
 *** Clojure
 #+BEGIN_SRC clojure :results output
