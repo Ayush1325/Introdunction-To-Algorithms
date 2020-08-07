@@ -1,6 +1,51 @@
 * Inversions
 - For i < j : A[i] > A[j] is known as inversion.
-** Solution
+** Code
+*** Rust
+#+BEGIN_SRC rust
+  fn sorting(arr: &mut [i32], start: usize, end: usize, count: &mut usize) {
+      if start < end {
+          let len = end - start;
+          let mid = (len / 2) + start;
+          sorting(arr, start, mid, count);
+          sorting(arr, mid + 1, end, count);
+          ,*count += merge(arr, start, mid, mid + 1, end)
+      }
+  }
+
+  fn merge(arr: &mut [i32], s1: usize, e1: usize, s2: usize, e2: usize) -> usize {
+      let mut temp: Vec<i32> = Vec::new();
+      let mut c1 = s1;
+      let mut c2 = s2;
+      let mut count = 0;
+      while c1 <= e1 && c2 <= e2 {
+          if arr[c1] <= arr[c2] {
+              temp.push(arr[c1]);
+              c1 += 1;
+          } else {
+              temp.push(arr[c2]);
+              c2 += 1;
+              count += e1 - c1 + 1;
+          }
+      }
+
+      while c1 <= e1 {
+          temp.push(arr[c1]);
+          c1 += 1;
+      }
+
+      while c2 <= e1 {
+          temp.push(arr[c2]);
+          c2 += 1;
+      }
+
+      for (index, item) in temp.iter().enumerate() {
+          arr[s1 + index] = *item;
+      }
+      count
+  }
+#+END_SRC
+*** Clojure
 #+BEGIN_SRC clojure :results output
   (defn merge-vec [[l & lrest :as left] [r & rrest :as right]]
     (if (and (not-empty left) (not-empty right))
