@@ -1,5 +1,22 @@
 * Fibonacci Numbers
-- Code:
+** Code
+*** Rust
+#+BEGIN_SRC rust
+  fn fibonacci(terms: usize) -> Vec<u32> {
+      let mut arr: Vec<u32> = Vec::new();
+      if terms > 0 {
+          arr.push(0);
+      }
+      if terms > 1 {
+          arr.push(1);
+      }
+      for i in 2..terms {
+          arr.push(arr[i - 1] + arr[i - 2]);
+      }
+      arr
+  }
+#+END_SRC
+*** Clojure
 #+BEGIN_SRC clojure :results output
   (defn fibonacci-series
     ([] (fibonacci-series 0 1))
