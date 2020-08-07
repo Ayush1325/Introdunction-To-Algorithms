@@ -122,7 +122,24 @@
 #+BEGIN_EXPORT latex
 \Theta(nk + n\log(n/k))
 #+END_EXPORT
-- Code:
+** Code
+*** Rust
+#+BEGIN_SRC rust
+  fn modified_divide(arr: &mut [i32], start: usize, end: usize) {
+      if start < end {
+          let len = end - start;
+          if len < 10 {
+              super::insertion_sort::recursive(&mut arr[start..(end + 1)], len);
+          } else {
+              let mid = (len / 2) + start;
+              modified_divide(arr, start, mid);
+              modified_divide(arr, mid + 1, end);
+              super::merge_sort::merge(arr, start, mid, mid + 1, end);
+          }
+      }
+  }
+#+END_SRC
+*** Clojure
 #+BEGIN_SRC clojure :results output
   (defn modified-divide [arr]
     (if (<= (count arr) 10)
