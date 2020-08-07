@@ -83,6 +83,50 @@
 
 * Max Subarray
 ** Recursive
+*** Rust
+#+BEGIN_SRC rust
+  fn divide(arr: &[i32], start: usize, end: usize) -> (usize, usize, i32) {
+      if start < end {
+          let mid = (start + end) / 2;
+          let (l_start, l_end, l_sum) = divide(arr, start, mid);
+          let (r_start, r_end, r_sum) = divide(arr, mid + 1, end);
+          let (c_start, c_end, c_sum) = cross_max(arr, start, end, mid);
+          if l_sum >= r_sum && l_sum >= c_sum {
+              return (l_start, l_end, l_sum);
+          } else if r_sum >= c_sum {
+              return (r_start, r_end, r_sum);
+          }
+          return (c_start, c_end, c_sum);
+      }
+      (start, end, arr[start])
+  }
+
+  fn cross_max(arr: &[i32], start: usize, end: usize, mid: usize) -> (usize, usize, i32) {
+      let mut l_sum = arr[mid];
+      let mut l_pos = mid;
+      let mut l_max = arr[l_pos];
+      for i in (start..mid).rev() {
+          l_sum += arr[i];
+          if l_sum > l_max {
+              l_pos = i;
+              l_max = l_sum;
+          }
+      }
+
+      let mut r_sum = arr[mid + 1];
+      let mut r_pos = mid + 1;
+      let mut r_max = arr[r_pos];
+      for i in (mid + 2)..(end + 1) {
+          r_sum += arr[i];
+          if r_sum > r_max {
+              r_max = r_sum;
+              r_pos = i;
+          }
+      }
+      (l_pos, r_pos, l_max + r_max)
+  }
+#+END_SRC
+*** Clojure
 #+BEGIN_SRC clojure :results output
   (defn max-crossing-subarray
     ([left right] (let [l (max-crossing-subarray (reverse left)) r (max-crossing-subarray right)]
