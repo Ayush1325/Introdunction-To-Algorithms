@@ -1,0 +1,50 @@
+* Heaps
+** Priority Queues
+- It is a data structure for maintaining a set S of elements, each with an associated value called key.
+- Can be *max-priority-queue* or *min-priority-queue*.
+*** Supports the following operations
+**** Insert
+#+begin_src rust
+  fn max_heap_insert(arr: &mut Vec<i32>, key: i32) {
+      arr.push(0);
+      let x = arr.len();
+      heap_increase_key(arr, x - 1, key);
+  }
+#+end_src
+**** Maximum/Minimum
+- Returns largest key.
+#+begin_src rust
+  fn heap_max(arr: &[i32]) -> i32 {
+      ,*arr.first().expect("Heap Empty")
+  }
+#+end_src
+**** Extract Max/Min
+- Removes element with largest key.
+#+begin_src rust
+  fn extract_max(arr: &mut Vec<i32>) -> Result<i32, String> {
+      if arr.is_empty() {
+          return Err(String::from("Heap Underflow"));
+      }
+      let max = arr[0];
+      arr[0] = *arr.last().expect("");
+      arr.pop();
+      let len = arr.len();
+      max_heapify(arr, 0, len);
+      Ok(max)
+  }
+#+end_src
+**** Increase-Key/Decrease-Key
+- Increases value of element x's key to the new value y which is assumed to be at lease as large as x's current key.
+#+begin_src rust
+  fn heap_increase_key(arr: &mut [i32], i: usize, key: i32) {
+      let mut j = i;
+      arr[j] = key;
+      while j > 0 && arr[heap_opr::parent(j)] < arr[j] {
+          arr.swap(heap_opr::parent(j), j);
+          j = heap_opr::parent(j);
+      }
+  }
+#+end_src
+*** Uses
+- Schedule jobs on a shared computer.
+

@@ -185,15 +185,61 @@
 : true
 
 * Heap Sort
-- Worst Time: 
+** Theory
+- A good implementation of quicksort beats it in practice.
+** Worst Time
 #+BEGIN_EXPORT latex
 \Theta(n\log{n})
 #+END_EXPORT
-- Code
-#+BEGIN_SRC clojure
+** Code
+*** Rust
+#+begin_src rust
+  mod heap_opr {
+      pub fn parent(x: usize) -> usize {
+          (x - 1) >> 1
+      }
 
-#+END_SRC
+      pub fn left(x: usize) -> usize {
+          (x << 1) + 1
+      }
 
+      pub fn right(x: usize) -> usize {
+          (x << 1) + 2
+      }
+  }
+
+  fn max_heapify(arr: &mut [i32], i: usize, heap_size: usize) {
+      let left = heap_opr::left(i);
+      let right = heap_opr::right(i);
+      let mut largest = i;
+      if left < heap_size && arr[left] > arr[largest] {
+          largest = left;
+      }
+      if right < heap_size && arr[right] > arr[largest] {
+          largest = right;
+      }
+      if largest != i {
+          arr.swap(i, largest);
+          max_heapify(arr, largest, heap_size);
+      }
+  }
+
+  fn build_max_heap(arr: &mut [i32]) {
+      for i in (0..heap_opr::parent(arr.len())).rev() {
+          max_heapify(arr, i, arr.len());
+      }
+  }
+
+  fn heap_sort(arr: &mut [i32]) {
+      let mut heap_size = arr.len();
+      build_max_heap(arr);
+      for i in (1..arr.len()).rev() {
+          arr.swap(i, 0);
+          heap_size -= 1;
+          max_heapify(arr, 0, heap_size);
+      }
+  }
+#+end_src
 * Tests
 #+BEGIN_SRC clojure
   (def simple-list [2 4 6 1 3 7 2])
