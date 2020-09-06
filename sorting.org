@@ -9,14 +9,17 @@
 | Radix Sort     | \Theta(d(k + n)) | \Theta(d(k + n))  |
 | Bucket Sort    | \Theta(n^2)       | \Theta(n)         |
 
-* Insertion Sort
+* Comparison Sort
+- Gets information about elements only by comparing them
+- Can only be \Theta(n\log{n})
+** Insertion Sort
 - This is the basic version of insertion sort.
 - Worst time: 
 #+BEGIN_EXPORT latex 
 \Theta(n^2) 
 #+END_EXPORT
-** Code
-*** Rust
+*** Code
+**** Rust
 #+begin_src rust
   fn sort(arr: &mut [i32]) {
       let len = arr.len();
@@ -31,7 +34,7 @@
       }
   }
 #+end_src
-*** Clojure
+**** Clojure
 #+BEGIN_SRC clojure :results output
   (defn ins-sort [arr]
     (reduce (fn [res inp]
@@ -47,13 +50,13 @@
 : true
 : true
 
-* Merge Sort
+** Merge Sort
 - Worst Time: 
 #+BEGIN_EXPORT latex
 \Theta(n\log{n})
 #+END_EXPORT
-** Code
-*** Rust 
+*** Code
+**** Rust 
 #+BEGIN_SRC rust
   fn divide(arr: &mut [i32], start: usize, end: usize) {
       if start < end {
@@ -94,7 +97,7 @@
       }
   }
 #+END_SRC
-*** Clojure
+**** Clojure
 #+BEGIN_SRC clojure :results output
   (defn merge-vec [[l & lrest :as left] [r & rrest :as right]]
     (if (and (not-empty left) (not-empty right))
@@ -116,14 +119,14 @@
 : true
 : true
 
-* Combine-sort
+** Combine-sort
 - A combination of insertion sort and merge sort
 - Worst time: 
 #+BEGIN_EXPORT latex
 \Theta(nk + n\log(n/k))
 #+END_EXPORT
-** Code
-*** Rust
+*** Code
+**** Rust
 #+BEGIN_SRC rust
   fn modified_divide(arr: &mut [i32], start: usize, end: usize) {
       if start < end {
@@ -139,7 +142,7 @@
       }
   }
 #+END_SRC
-*** Clojure
+**** Clojure
 #+BEGIN_SRC clojure :results output
   (defn modified-divide [arr]
     (if (<= (count arr) 10)
@@ -154,7 +157,7 @@
 : true
 : true
 
-* Bubble Sort
+** Bubble Sort
 - Another sorting algorithm
 - Worst time: 
 #+BEGIN_EXPORT latex
@@ -184,15 +187,15 @@
 : true
 : true
 
-* Heap Sort
-** Theory
+** Heap Sort
+*** Theory
 - A good implementation of quicksort beats it in practice.
-** Worst Time
+*** Worst Time
 #+BEGIN_EXPORT latex
 \Theta(n\log{n})
 #+END_EXPORT
-** Code
-*** Rust
+*** Code
+**** Rust
 #+begin_src rust
   mod heap_opr {
       pub fn parent(x: usize) -> usize {
@@ -240,17 +243,17 @@
       }
   }
 #+end_src
-* Quick Sort
-** Theory
+** Quick Sort
+*** Theory
 - Outputrforms heap and merge Sort in most cases
 - Also works well in virtual memory environments.
 - In place sorting.
-*** Worst Case
+**** Worst Case
 \Theta(n^2)
-*** Average Case
+**** Average Case
 \Theta(n*log{n})
-*** Code
-**** Rust
+**** Code
+***** Rust
 #+begin_src rust
   fn quick_sort(arr: &mut [i32]) {
       let len = arr.len();
@@ -286,6 +289,27 @@
       i
   }
 
+#+end_src
+* Other Sorts
+- Use things other than comparison to gather info about elements.
+** Counting Sort
+*** Theory
+**** Worst Case
+\Theta(n)
+*** Code
+**** Rust
+#+begin_src rust
+  fn counting_sort(arr: &[usize], low: usize, high: usize) -> Vec<usize> {
+      let mut c = vec![0; high];
+      let mut b = Vec::new();
+      for i in arr.iter() {
+          c[*i] += 1;
+      }
+      for (i, j) in c.iter().enumerate() {
+          b.extend(vec![low + i; *j])
+      }
+      b
+  }
 #+end_src
 * Tests
 #+BEGIN_SRC clojure
