@@ -311,6 +311,34 @@
       b
   }
 #+end_src
+** Radix Sort
+*** Code
+**** Rust
+#+begin_src rust
+  fn get_num(x: &str, p: usize) -> char {
+      match x.chars().rev().nth(p) {
+          Some(a) => a,
+          None => '0',
+      }
+  }
+
+  fn radiax_sort(arr: &mut [&str], max: usize) {
+      for i in 0..max {
+          arr.sort_by(|a, b| get_num(a, i).cmp(&get_num(b, i)));
+      }
+  }
+#+end_src
+**** Clojure
+#+begin_src clojure
+  (defn radiax-sort [arr]
+    (loop [x (range (count (apply max-key count arr)))
+           y arr]
+      (println y)
+      (if (empty? x)
+        y
+        (recur (rest x)
+               (sort-by #(nth (reverse %) (first x) \0) y)))))
+#+end_src
 * Tests
 #+BEGIN_SRC clojure
   (def simple-list [2 4 6 1 3 7 2])
