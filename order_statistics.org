@@ -1,0 +1,48 @@
+* Selecting item from nth postion
+** Basic Method
+- Sort Array.
+- Find element at that postion.
+** Modification for Quicksort
+*** Theory
+- Average Time: \Theta(n)
+*** Code
+**** Rust
+#+begin_src rust
+  fn rand_select(arr: &mut [i32], i: usize) -> i32 {
+      match arr.len() {
+          0 | 1 => -1,
+          _ => {
+              let q = rand_partition(arr);
+              match q.cmp(&i) {
+                  Ordering::Equal => arr[q],
+                  Ordering::Greater => rand_select(&mut arr[0..q], i),
+                  Ordering::Less => rand_select(&mut arr[(q + 1)..], i - q - 1),
+              }
+          }
+      }
+  }
+
+  fn rand_partition(arr: &mut [i32]) -> usize {
+      let mut rng = rand::thread_rng();
+      let p = rng.gen_range(0, arr.len());
+      arr.swap(p, arr.len() - 1);
+      partition(arr)
+  }
+
+  fn partition(arr: &mut [i32]) -> usize {
+      let len = arr.len();
+      if len == 0 || len == 1 {
+          return 0;
+      }
+      let p = arr[len - 1];
+      let mut i = 0;
+      for j in 0..(len - 1) {
+          if arr[j] <= p {
+              arr.swap(i, j);
+              i += 1;
+          }
+      }
+      arr.swap(i, len - 1);
+      i
+  }
+#+end_src

@@ -14,10 +14,7 @@
 - Can only be \Theta(n\log{n})
 ** Insertion Sort
 - This is the basic version of insertion sort.
-- Worst time: 
-#+BEGIN_EXPORT latex 
-\Theta(n^2) 
-#+END_EXPORT
+- *Worst time:* \Theta(n^2)
 *** Code
 **** Rust
 #+begin_src rust
@@ -51,12 +48,9 @@
 : true
 
 ** Merge Sort
-- Worst Time: 
-#+BEGIN_EXPORT latex
-\Theta(n\log{n})
-#+END_EXPORT
+- *Worst Time:* \Theta(n\log{n})
 *** Code
-**** Rust 
+**** Rust
 #+BEGIN_SRC rust
   fn divide(arr: &mut [i32], start: usize, end: usize) {
       if start < end {
@@ -121,10 +115,7 @@
 
 ** Combine-sort
 - A combination of insertion sort and merge sort
-- Worst time: 
-#+BEGIN_EXPORT latex
-\Theta(nk + n\log(n/k))
-#+END_EXPORT
+- *Worst time:* \Theta(nk + n\log(n/k))
 *** Code
 **** Rust
 #+BEGIN_SRC rust
@@ -159,11 +150,9 @@
 
 ** Bubble Sort
 - Another sorting algorithm
-- Worst time: 
-#+BEGIN_EXPORT latex
-\Theta(n^2)
-#+END_EXPORT
-- Code:
+- *Worst time:* \Theta(n^2)
+*** Code:
+**** Clojure
 #+BEGIN_SRC clojure :results output
   (defn bubble
     ([xs] (bubble xs [] false))
@@ -190,10 +179,7 @@
 ** Heap Sort
 *** Theory
 - A good implementation of quicksort beats it in practice.
-*** Worst Time
-#+BEGIN_EXPORT latex
-\Theta(n\log{n})
-#+END_EXPORT
+- *Worst Time:* \Theta(n\log{n})
 *** Code
 **** Rust
 #+begin_src rust
@@ -248,12 +234,10 @@
 - Outputrforms heap and merge Sort in most cases
 - Also works well in virtual memory environments.
 - In place sorting.
-**** Worst Case
-\Theta(n^2)
-**** Average Case
-\Theta(n*log{n})
-**** Code
-***** Rust
+- *Worst Case:* \Theta(n^2)
+- *Average Case:* \Theta(n*log{n})
+*** Code
+**** Rust
 #+begin_src rust
   fn quick_sort(arr: &mut [i32]) {
       let len = arr.len();
@@ -288,14 +272,12 @@
       arr.swap(i, len - 1);
       i
   }
-
 #+end_src
 * Other Sorts
 - Use things other than comparison to gather info about elements.
 ** Counting Sort
 *** Theory
-**** Worst Case
-\Theta(n)
+- *Worst Case:* \Theta(n)
 *** Code
 **** Rust
 #+begin_src rust
@@ -322,7 +304,7 @@
       }
   }
 
-  fn radiax_sort(arr: &mut [&str], max: usize) {
+  fn radix_sort(arr: &mut [&str], max: usize) {
       for i in 0..max {
           arr.sort_by(|a, b| get_num(a, i).cmp(&get_num(b, i)));
       }
@@ -330,7 +312,7 @@
 #+end_src
 **** Clojure
 #+begin_src clojure
-  (defn radiax-sort [arr]
+  (defn radix-sort [arr]
     (loop [x (range (count (apply max-key count arr)))
            y arr]
       (println y)
@@ -338,6 +320,24 @@
         y
         (recur (rest x)
                (sort-by #(nth (reverse %) (first x) \0) y)))))
+#+end_src
+** Bucket Sort
+- Divide input into intervals and sort each interval.
+- Buckets dependent on the input array. So don't have a generalised version
+*** Code
+**** Clojure
+- Buckets based on the length of number.
+#+begin_src clojure
+  (defn create-bucket [arr]
+    (reduce (fn [in x]
+              (let [t (count x)]
+                (assoc in t (conj (in t) x))))
+            (apply vector (take (inc (count (apply max-key count arr))) (repeat [])))
+            arr))
+
+  (defn big-sort [arr]
+    (reduce (fn [in x]
+              (into in (sort x))) [] (create-bucket arr)))
 #+end_src
 * Tests
 #+BEGIN_SRC clojure
