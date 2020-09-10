@@ -1,3 +1,17 @@
+* Dynamic Sets
+- Basically all data structures like Heaps, Stacks etc are dynamic sets.
+** Operations
+*** Queries
+- Simply return info about the set
+**** Search(S, k)
+**** Minimum(S)
+**** Maximum(S)
+**** Successor(S, x)
+**** Predecessor(S, x)
+*** Modifying Operations
+- Change the set
+**** Insert(S, x)
+**** Delete(S, x)
 * Heaps
 ** Priority Queues
 - It is a data structure for maintaining a set S of elements, each with an associated value called key.
