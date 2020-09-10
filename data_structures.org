@@ -12,6 +12,7 @@
 - Change the set
 **** Insert(S, x)
 **** Delete(S, x)
+
 * Heaps
 ** Priority Queues
 - It is a data structure for maintaining a set S of elements, each with an associated value called key.
@@ -62,3 +63,33 @@
 *** Uses
 - Schedule jobs on a shared computer.
 
+* Stacks
+- Last-in First-out(LIFO)
+- Can be implemented with normal arrays.
+- Vectors can be operated as stacks, at least in rust. So don't see need to reimplement.
+** Operations
+*** Push
+*** Pop
+*** Empty
+- Check if empty
+
+* Queues
+- First-in First-out(FIFO)
+- Again, can be implemented with arrays. Not much reason to reimplement.
+** Operations
+*** Enqueue
+- Insert to stack
+*** Dequeue
+- Delete from stack
+
+* Linked List
+- Its objects are arranged in linear order
+- Each element contains pointers to other elements.
+- Not always the most efficient dynamic set.
+** Types
+*** Single Linked
+- Each element only points to the next element.
+*** Double Linked
+- Each elemet contains pointers to next and previous element.
+*** Circular
+- The last element points to the first element.
