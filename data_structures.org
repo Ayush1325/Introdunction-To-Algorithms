@@ -89,7 +89,106 @@
 ** Types
 *** Single Linked
 - Each element only points to the next element.
+#+begin_src rust
+  struct Element<T> {
+      val: Option<T>,
+      next: Box<Element<T>>,
+  }
+
+#+end_src
 *** Double Linked
 - Each elemet contains pointers to next and previous element.
+#+begin_src rust
+  struct Element<T> {
+      val: Option<T>,
+      next: Box<Element<T>>,
+      prev: Box<Element<T>>
+  }
+#+end_src
 *** Circular
 - The last element points to the first element.
+** Operations
+*** Searching
+*** Inserting
+*** Deleting
+** Implementation
+- Delete is too much of a pain in rust.
+- Much better to use built in types.
+#+begin_src rust
+  struct Node<T> {
+      val: T,
+      next: NodeOption<T>,
+      prev: NodeOption<T>,
+  }
+
+  impl<T> Node<T> {
+      fn new(x: T, n: NodeOption<T>, p: NodeOption<T>) -> NodeRef<T> {
+          Rc::new(RefCell::new(Node {
+              val: x,
+              next: n,
+              prev: p,
+          }))
+      }
+  }
+
+  struct LinkedList<T> {
+      head: NodeOption<T>,
+      tail: NodeOption<T>,
+      len: usize,
+  }
+
+  impl<T: std::cmp::PartialEq + std::fmt::Display> LinkedList<T> {
+      fn new() -> Self {
+          LinkedList {
+              head: None,
+              tail: None,
+              len: 0,
+          }
+      }
+      fn insert(&mut self, x: T) {
+          let temp = match &self.head {
+              Some(m) => Node::new(x, Some(Rc::clone(&m)), None),
+              None => Node::new(x, None, None),
+          };
+          self.len += 1;
+          self.head = Some(Rc::clone(&temp));
+          if self.tail.is_none() {
+              self.tail = Some(Rc::clone(&temp));
+          }
+      }
+
+      fn print_list(&self) {
+          let mut t = match &self.head {
+              Some(x) => Rc::clone(&x),
+              None => return,
+          };
+          loop {
+              print!("{} ", t.borrow().val);
+              let temp = Rc::clone(&t);
+              match &temp.borrow().next {
+                  Some(x) => t = Rc::clone(x),
+                  None => break,
+              };
+          }
+      }
+      fn search(&self, k: T) -> Option<usize> {
+          let mut t = match &self.head {
+              Some(x) => Rc::clone(&x),
+              None => return None,
+          };
+          let mut pos = 0;
+          loop {
+              let temp = Rc::clone(&t);
+              if temp.borrow().val == k {
+                  return Some(pos);
+              }
+              match &temp.borrow().next {
+                  Some(x) => t = Rc::clone(x),
+                  None => break,
+              };
+              pos += 1;
+          }
+          None
+      }
+  }
+#+end_src
